@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Telegram Bot Control Panel</title>
+</head>
+<body>
+    <h1>Telegram Bot Control Panel</h1>
+
+    <a href="/export_users">Download User Data</a>
+
+    {% for language, message_keys in custom_messages.items() %}
+        <h2>{{ language }}</h2>
+        {% for message_key, messages in message_keys.items() %}
+            <h3>{{ message_key }}</h3>
+            <form action="/update_messages" method="post">
+                <input type="hidden" name="language" value="{{ language }}">
+                <input type="hidden" name="message_key" value="{{ message_key }}">
+                {% for message in messages %}
+                    <input type="text" name="new_messages" value="{{ message }}"><br>
+                {% endfor %}
+                <input type="text" name="new_messages"><br>
+                <input type="submit" value="Update">
+            </form>
+        {% endfor %}
+    {% endfor %}
+
+    {{ footer|safe }}
+</body>
+</html>
